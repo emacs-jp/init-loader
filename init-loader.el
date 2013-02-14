@@ -54,7 +54,7 @@
   :type 'boolean
   :group 'init-loader)
 
-(defcustom init-loader-byte-compile t
+(defcustom init-loader-byte-compile nil
   "自動的に設定ファイルをバイトコンパイルする"
   :type 'boolean
   :group 'init-loader)
