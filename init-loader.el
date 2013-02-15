@@ -201,56 +201,6 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
       (goto-char (point-min)))
     (switch-to-buffer b)))
 
-
-;;;; Test
-(defvar init-loader-test-files
-  '("00_utils.el"
-    "23_yaml.el"
-    "01_ik-cmd.el"
-    "96_color.el"
-    "20_elisp.el"
-    "21_javascript.el"
-    "25_perl.el"
-    "98_emacs-config.el"
-    "99_global-keys.el"
-    "carbon-emacs-config.el"
-    "carbon-emacs-migemo.el"
-    "nw-config.el"
-    "emacs-migemo.el"
-    "meadow-cmd.el"
-    "meadow-config.el"
-    "meadow-gnuserv.el"
-    "meadow-shell.el"
-    "meadow-w32-symlinks.el"))
-
-(dont-compile
-  (when (fboundp 'expectations)
-    (expectations 
-      (desc "init-loader--re-load-files")
-      (expect  '("00_utils.el" "01_ik-cmd.el" "20_elisp.el" "21_javascript.el" "23_yaml.el" "25_perl.el" "96_color.el" "98_emacs-config.el" "99_global-keys.el")
-        (stub directory-files => init-loader-test-files)
-        (init-loader--re-load-files init-loader-default-regexp "" t))
-      (expect  '("meadow-cmd.el" "meadow-config.el" "meadow-gnuserv.el" "meadow-shell.el" "meadow-w32-symlinks.el")
-        (stub directory-files => init-loader-test-files)
-        (init-loader--re-load-files init-loader-meadow-regexp "" t))
-
-      (expect  '("carbon-emacs-config.el" "carbon-emacs-migemo.el")
-        (stub directory-files => init-loader-test-files)
-        (init-loader--re-load-files init-loader-carbon-emacs-regexp "" t))
-      (expect  '("nw-config.el")
-        (stub directory-files => init-loader-test-files)
-        (init-loader--re-load-files init-loader-nw-regexp "" t))
-      ;; 環境依存
-      (desc "follow symlink")
-      (expect "c/.emacs.d/inits"
-        (file-relative-name (file-symlink-p "~/tmp/el-inits"))) ; symlink
-      (desc "init-loader-follow-symlink")
-      (expect "c/.emacs.d/inits"
-        (file-relative-name (init-loader-follow-symlink "~/tmp/el-inits")))
-      (expect "c/.emacs.d/inits"
-        (file-relative-name (init-loader-follow-symlink "~/tmp/el-inits")))
-      )))
-
 (provide 'init-loader)
 
 ;; Local Variables:
