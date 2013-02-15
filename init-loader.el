@@ -99,6 +99,7 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
   :type 'regexp)
 
 ;;; Code
+;;;###autoload
 (defun* init-loader-load (&optional (init-dir init-loader-directory))
   (let ((init-dir (init-loader-follow-symlink init-dir)))
     (assert (and (stringp init-dir) (file-directory-p init-dir)))
@@ -177,6 +178,7 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
           collect (file-name-nondirectory el) into ret
           finally return (if sort (sort ret 'string<) ret)))
 
+;;;###autoload
 (defun init-loader-show-log ()
   "return buffer"
   (interactive)
