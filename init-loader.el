@@ -1,9 +1,8 @@
-;;;  -*- coding: utf-8; mode: emacs-lisp; -*-
-;;; init-loader.el ---
+;;; init-loader.el --- Loader for configuration files
 
 ;; Author: IMAKADO <ken.imakado@gmail.com>
-;; Author's blog: http://d.hatena.ne.jp/IMAKADO (japanese)
-;; Prefix: init-loader-
+;; URL: https://github.com/emacs-jp/init-loader/
+;; Version: 0.01
 
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,6 +18,8 @@
 ;; along with GNU Emacs; see the file COPYING.  If not, write to the
 ;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
+
+;;; Commentary:
 
 ;;; 使い方
 ;; load-pathの通った場所に置いて
@@ -36,12 +37,15 @@
 ;; ファイルロード後,変数`init-loader-show-log-after-init'の値がnon-nilなら,ログバッファを表示する関数を`after-init-hook'へ追加する.
 ;; ログの表示は, M-x init-loader-show-log でも可能.
 
+;;; Code:
+
 (eval-when-compile (require 'cl))
 (require 'benchmark)
 
 ;;; customize-variables
 (defgroup init-loader nil
   "init loader"
+  :prefix "init-loader-"
   :group 'initialization)
 
 (defcustom init-loader-directory (expand-file-name "~/.emacs.d/inits")
@@ -119,10 +123,10 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
     ;; 2011/06/12 zqwell Windows/Linux 固有設定ファイル読み込み用
     ;; windows
     (and (featurep 'dos-w32)
-	 (init-loader-re-load init-loader-win-regexp init-dir))
+         (init-loader-re-load init-loader-win-regexp init-dir))
     ;; Linux
     (and (equal system-type 'gnu/linux)
-	 (init-loader-re-load init-loader-lin-regexp init-dir))
+         (init-loader-re-load init-loader-lin-regexp init-dir))
 
     (when init-loader-show-log-after-init
       (add-hook  'after-init-hook 'init-loader-show-log))))
@@ -161,22 +165,22 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
           (let ((time (car (benchmark-run (init-loader-load-file (file-name-sans-extension el))))))
             (init-loader-log (format "loaded %s. %s" (locate-library el) time)))
         (error
-	 ;; 2011/06/12 zqwell エラー箇所表示対応
-	 ;; 参考URL: http://d.hatena.ne.jp/kitokitoki/20101205/p1
+         ;; 2011/06/12 zqwell エラー箇所表示対応
+         ;; 参考URL: http://d.hatena.ne.jp/kitokitoki/20101205/p1
          ; (init-loader-error-log (error-message-string e))
          (init-loader-error-log (format "%s. %s" (locate-library el) (error-message-string e)))
-	 ))));)
+         ))));)
 
 ;; 2011/06/12 zqwell elc優先読み込み対応
 ;; 参考URL: http://twitter.com/#!/fkmn/statuses/21411277599
 (defun init-loader--re-load-files (re dir &optional sort)
-    (loop for el in (directory-files dir t)
-          when (and (string-match re (file-name-nondirectory el))
-                    (or (string-match "elc$" el)
-                        (and (string-match "el$" el)
-                             (not (locate-library (concat el "c"))))))
-          collect (file-name-nondirectory el) into ret
-          finally return (if sort (sort ret 'string<) ret)))
+  (loop for el in (directory-files dir t)
+        when (and (string-match re (file-name-nondirectory el))
+                  (or (string-match "elc$" el)
+                      (and (string-match "el$" el)
+                           (not (locate-library (concat el "c"))))))
+        collect (file-name-nondirectory el) into ret
+        finally return (if sort (sort ret 'string<) ret)))
 
 ;;;###autoload
 (defun init-loader-show-log ()
@@ -248,3 +252,10 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
       )))
 
 (provide 'init-loader)
+
+;; Local Variables:
+;; coding: utf-8
+;; indent-tabs-mode: nil
+;; End:
+
+;;; init-loader.el ends here
