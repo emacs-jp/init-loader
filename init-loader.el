@@ -42,7 +42,7 @@
 ;;; customize-variables
 (defgroup init-loader nil
   "init loader"
-  :group 'init-loader)
+  :group 'initialization)
 
 (defcustom init-loader-directory (expand-file-name "~/.emacs.d/inits")
   "inits directory"
@@ -246,4 +246,3 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
       )))
 
 (provide 'init-loader)
-
