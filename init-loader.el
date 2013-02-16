@@ -178,8 +178,8 @@ Example, 00_foo.el, 01_bar.el ... 99_keybinds.el"
 (defun init-loader--re-load-files (re dir &optional sort)
   (loop for el in (directory-files dir t)
         when (and (string-match re (file-name-nondirectory el))
-                  (or (string-match "elc$" el)
-                      (and (string-match "el$" el)
+                  (or (string-match "elc\\'" el)
+                      (and (string-match "el\\'" el)
                            (not (locate-library (concat el "c"))))))
         collect (file-name-nondirectory el) into ret
         finally return (if sort (sort ret 'string<) ret)))
