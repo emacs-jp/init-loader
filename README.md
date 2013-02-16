@@ -30,15 +30,15 @@ You can seperate configuration files easily by `init-loader.el`.
 
     e.g. "00_utils.el" "01_ik-cmd.el" "21_javascript.el" ... "99_global-keys.el"
 
-2. Windows specific configuration files if system is Windows(First start with 'windows-', Second start with 'meadow-').
+2. Windows specific configuration files if system is Windows(First start with `windows-`, Second start with `meadow-`).
 
     e.g. "windows-fonts.el", "windows-system.el", "meadow-commands.el", "meadow-fonts.el"
 
-3. MacOSX specific configuration files if system is MacOSX(First start with 'carbon-', Second start with 'cocoa-').
+3. MacOSX specific configuration files if system is MacOSX(First start with `carbon-`, Second start with `cocoa-`).
 
     e.g. "carbon-applescript.el", "cocoa-fonts.el", "cocoa-plist.el"
 
-4. No window Emacs specific configuration files which start with 'nw-'
+4. No window Emacs specific configuration files which start with `nw-`.
 
     e.g. "nw-config.el", "nw-key.el"
 
