@@ -28,19 +28,19 @@ You can seperate configuration files easily by `init-loader.el`.
 
 1. Configuration files which start with two digits. Small number file is loaded earlier than large number file.
 
-  e.g. "00_utils.el" "01_ik-cmd.el" "21_javascript.el" ... "99_global-keys.el"
+    e.g. "00_utils.el" "01_ik-cmd.el" "21_javascript.el" ... "99_global-keys.el"
 
-2. Windows specific configuration files if system is Windows. First load files that start with 'windows-'. Second load files that start with 'meadow-'
+2. Windows specific configuration files if system is Windows(First start with 'windows-', Second start with 'meadow-').
 
-  e.g. "windows-fonts.el", "windows-system.el", "meadow-commands.el", "meadow-fonts.el"
+    e.g. "windows-fonts.el", "windows-system.el", "meadow-commands.el", "meadow-fonts.el"
 
-3. MacOSX specific configuration files if system is MacOSX. First load files that start with 'carbon-'. Second load files that start with 'cocoa-'
+3. MacOSX specific configuration files if system is MacOSX(First start with 'carbon-', Second start with 'cocoa-').
 
-  e.g. "carbon-applescript.el", "cocoa-fonts.el", "cocoa-plist.el"
+    e.g. "carbon-applescript.el", "cocoa-fonts.el", "cocoa-plist.el"
 
 4. No window Emacs specific configuration files which start with 'nw-'
 
-  e.g. "nw-config.el", "nw-key.el"
+    e.g. "nw-config.el", "nw-key.el"
 
 
 ## interfaces
@@ -52,7 +52,7 @@ Show loading log messeage
 
 ## Customize
 
-Configuration files directory(Default is '~/.emacs.d/init')
+Configuration files directory(Default is `~/.emacs.d/init`)
 
     init-loader-directory
 
