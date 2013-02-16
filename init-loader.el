@@ -48,7 +48,11 @@
   :prefix "init-loader-"
   :group 'initialization)
 
-(defcustom init-loader-directory (expand-file-name "~/.emacs.d/inits")
+(defcustom init-loader-directory
+  (expand-file-name (concat (if (boundp 'user-emacs-directory)
+                                (file-name-as-directory user-emacs-directory)
+                              "~/.emacs.d/")
+                            "inits"))
   "inits directory"
   :type 'directory
   :group 'init-loader)
