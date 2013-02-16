@@ -91,4 +91,30 @@
       ;; teardown
       (delete-file symlink))))
 
+(ert-deftest init-loader-log ()
+  "Test for `init-loader-log'"
+  ;; pass not string value
+  (should-not (init-loader-log 1))
+
+  ;; log message
+  (init-loader-log "message1")
+  (should (string= "message1" (init-loader-log)))
+
+  ;; log message again
+  (init-loader-log "message2")
+  (should (string= "message1\nmessage2" (init-loader-log))))
+
+(ert-deftest init-loader-error-log ()
+  "Test for `init-loader-error-log'"
+  ;; pass not string value
+  (should-not (init-loader-error-log 1))
+
+  ;; log message
+  (init-loader-error-log "message1")
+  (should (string= "message1" (init-loader-error-log)))
+
+  ;; log message again
+  (init-loader-error-log "message2")
+  (should (string= "message1\nmessage2" (init-loader-error-log))))
+
 ;;; test-init-loader.el end here
