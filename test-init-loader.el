@@ -39,11 +39,15 @@
     "carbon-emacs-migemo.el"
     "nw-config.el"
     "emacs-migemo.el"
+    "windows-powershell.el"
+    "windows-fonts.el"
     "meadow-cmd.el"
     "meadow-config.el"
     "meadow-gnuserv.el"
     "meadow-shell.el"
-    "meadow-w32-symlinks.el"))
+    "meadow-w32-symlinks.el"
+    "linux-fonts.el"
+    "linux-commands.el"))
 
 ;; TODO flet is obsoleted from Emacs 24.3
 
@@ -57,6 +61,10 @@
                       "96_color.el" "98_emacs-config.el" "99_global-keys.el")))
       (should (equal got expected)))
 
+    (let ((got (init-loader--re-load-files init-loader-windows-regexp "" t))
+          (expected '("windows-fonts.el" "windows-powershell.el")))
+      (should (equal got expected)))
+
     (let ((got (init-loader--re-load-files init-loader-meadow-regexp "" t))
           (expected '("meadow-cmd.el" "meadow-config.el" "meadow-gnuserv.el"
                       "meadow-shell.el" "meadow-w32-symlinks.el")))
@@ -64,6 +72,10 @@
 
     (let ((got (init-loader--re-load-files init-loader-carbon-emacs-regexp "" t))
           (expected '("carbon-emacs-config.el" "carbon-emacs-migemo.el")))
+      (should (equal got expected)))
+
+    (let ((got (init-loader--re-load-files init-loader-linux-regexp "" t))
+          (expected '("linux-commands.el" "linux-fonts.el")))
       (should (equal got expected)))
 
     (let ((got (init-loader--re-load-files init-loader-nw-regexp "" t))
