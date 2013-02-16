@@ -67,14 +67,14 @@
   :type 'boolean
   :group 'init-loader)
 
-(defcustom init-loader-default-regexp "\\(?:^[[:digit:]]\\{2\\}\\)"
+(defcustom init-loader-default-regexp "\\(?:\\`[[:digit:]]\\{2\\}\\)"
   "起動時に読み込まれる設定ファイルにマッチする正規表現.
 デフォルトは二桁の数字から始まるファイルにマッチする正規表現.
 e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
   :type 'regexp
   :group 'init-loader )
 
-(defcustom init-loader-meadow-regexp "^meadow-"
+(defcustom init-loader-meadow-regexp "\\`meadow-"
   "meadow 使用時に読み込まれる設定ファイルにマッチする正規表現"
   :group 'init-loader
   :type 'regexp)
@@ -84,20 +84,18 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
   :group 'init-loader
   :type 'regexp)
 
-(defcustom init-loader-cocoa-emacs-regexp "^cocoa-emacs-"
+(defcustom init-loader-carbon-emacs-regexp "\\`carbon-emacs-"
+  "carbon-emacs 使用時に読み込まれる設定ファイルにマッチする正規表現"
+  :group 'init-loader
+  :type 'regexp)
+
+(defcustom init-loader-cocoa-emacs-regexp "\\`cocoa-emacs-"
   "cocoa-emacs 使用時に読み込まれる設定ファイルにマッチする正規表現"
   :group 'init-loader
   :type 'regexp)
 
-(defcustom init-loader-nw-regexp "^nw-"
+(defcustom init-loader-nw-regexp "\\`nw-"
   "no-window環境での起動時に読み込まれる設定ファイルにマッチする正規表現"
-  :group 'init-loader
-  :type 'regexp)
-
-;; 2011/06/12 zqwell Windows/Linux 固有設定ファイル読み込み用
-;; 参考URL: http://d.hatena.ne.jp/kiki114/20101109/1289316478
-(defcustom init-loader-win-regexp "^win-"
-  "Windows環境での起動時に読み込まれる設定ファイルにマッチする正規表現"
   :group 'init-loader
   :type 'regexp)
 
@@ -106,7 +104,6 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
   :group 'init-loader
   :type 'regexp)
 
-;;; Code
 ;;;###autoload
 (defun* init-loader-load (&optional (init-dir init-loader-directory))
   (let ((init-dir (init-loader-follow-symlink init-dir)))
