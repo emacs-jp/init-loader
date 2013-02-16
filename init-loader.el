@@ -79,8 +79,8 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
   :group 'init-loader
   :type 'regexp)
 
-(defcustom init-loader-carbon-emacs-regexp "^carbon-emacs-"
-  "carbon-emacs 使用時に読み込まれる設定ファイルにマッチする正規表現"
+(defcustom init-loader-windows-regexp "\\`windows-"
+  "Windows環境での起動時に読み込まれる設定ファイルにマッチする正規表現"
   :group 'init-loader
   :type 'regexp)
 
@@ -101,7 +101,7 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
   :group 'init-loader
   :type 'regexp)
 
-(defcustom init-loader-lin-regexp "^lin-"
+(defcustom init-loader-linux-regexp "\\`linux-"
   "Linux環境での起動時に読み込まれる設定ファイルにマッチする正規表現"
   :group 'init-loader
   :type 'regexp)
@@ -112,25 +112,28 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
   (let ((init-dir (init-loader-follow-symlink init-dir)))
     (assert (and (stringp init-dir) (file-directory-p init-dir)))
     (init-loader-re-load init-loader-default-regexp init-dir t)
+
+    ;; Windows
+    (when (featurep 'dos-w32)
+      (init-loader-re-load init-loader-windows-regexp init-dir))
     ;; meadow
-    (and (featurep 'meadow)
-         (init-loader-re-load init-loader-meadow-regexp init-dir))
-    ;; carbon emacs
-    (and (featurep 'carbon-emacs-package)
-         (init-loader-re-load init-loader-carbon-emacs-regexp init-dir))
-    ;; cocoa emacs
-    (and (equal window-system 'ns)
-         (init-loader-re-load init-loader-cocoa-emacs-regexp init-dir))
-    ;; no window
-    (and (null window-system)
-         (init-loader-re-load init-loader-nw-regexp init-dir))
-    ;; 2011/06/12 zqwell Windows/Linux 固有設定ファイル読み込み用
-    ;; windows
-    (and (featurep 'dos-w32)
-         (init-loader-re-load init-loader-win-regexp init-dir))
-    ;; Linux
-    (and (equal system-type 'gnu/linux)
-         (init-loader-re-load init-loader-lin-regexp init-dir))
+    (when (featurep 'meadow)
+      (init-loader-re-load init-loader-meadow-regexp init-dir))
+
+    ;; Carbon Emacs
+    (when (featurep 'carbon-emacs-package)
+      (init-loader-re-load init-loader-carbon-emacs-regexp init-dir))
+    ;; Cocoa Emacs
+    (when (equal window-system 'ns)
+      (init-loader-re-load init-loader-cocoa-emacs-regexp init-dir))
+
+    ;; GNU Linux
+    (when (equal system-type 'gnu/linux)
+      (init-loader-re-load init-loader-linux-regexp init-dir))
+
+    ;; no-window
+    (when (null window-system)
+      (init-loader-re-load init-loader-nw-regexp init-dir))
 
     (when init-loader-show-log-after-init
       (add-hook  'after-init-hook 'init-loader-show-log))))
