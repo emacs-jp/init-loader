@@ -44,7 +44,7 @@
 
 ;;; customize-variables
 (defgroup init-loader nil
-  "init loader"
+  "Loader of configuration files"
   :prefix "init-loader-"
   :group 'initialization)
 
@@ -58,49 +58,50 @@
   :group 'init-loader)
 
 (defcustom init-loader-show-log-after-init t
-  "non-nilだと起動時にログバッファを表示する"
+  "Show loading log message if this value is non-nil"
   :type 'boolean
   :group 'init-loader)
 
 (defcustom init-loader-byte-compile nil
-  "自動的に設定ファイルをバイトコンパイルする"
+  "Byte-Compile configuration files if this value is non-nil"
   :type 'boolean
   :group 'init-loader)
 
 (defcustom init-loader-default-regexp "\\(?:\\`[[:digit:]]\\{2\\}\\)"
-  "起動時に読み込まれる設定ファイルにマッチする正規表現.
-デフォルトは二桁の数字から始まるファイルにマッチする正規表現.
-e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
+  "Regexp of common configuration files
+
+Default regexp matches files that start with two digits.
+Example, 00_foo.el, 01_bar.el ... 99_keybinds.el"
   :type 'regexp
-  :group 'init-loader )
+  :group 'init-loader)
 
 (defcustom init-loader-meadow-regexp "\\`meadow-"
-  "meadow 使用時に読み込まれる設定ファイルにマッチする正規表現"
+  "Regexp of Meadow specific configuration file"
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-windows-regexp "\\`windows-"
-  "Windows環境での起動時に読み込まれる設定ファイルにマッチする正規表現"
+  "Regexp of Windows specific configuration file"
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-carbon-emacs-regexp "\\`carbon-emacs-"
-  "carbon-emacs 使用時に読み込まれる設定ファイルにマッチする正規表現"
+  "Regexp of Carbon Emacs specific configuration file"
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-cocoa-emacs-regexp "\\`cocoa-emacs-"
-  "cocoa-emacs 使用時に読み込まれる設定ファイルにマッチする正規表現"
+  "Regexp of Cocoa Emacs specific configuration file"
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-nw-regexp "\\`nw-"
-  "no-window環境での起動時に読み込まれる設定ファイルにマッチする正規表現"
+  "Regexp of no-window Emacs configuration file"
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-linux-regexp "\\`linux-"
-  "Linux環境での起動時に読み込まれる設定ファイルにマッチする正規表現"
+  "Regexp of GNU/Linux specific configuration file"
   :group 'init-loader
   :type 'regexp)
 
@@ -161,22 +162,19 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
   (load file))
 
 (defun init-loader-re-load (re dir &optional sort)
-;; 2011/06/12 zqwell load-path問題修正 (autoloadを使ったりすると問題になる)
-;  (let ((load-path (cons dir load-path)))
-  (add-to-list 'load-path dir) ; globalなload-pathを利用するようにする
-    (dolist (el (init-loader--re-load-files re dir sort))
-      (condition-case e
-          (let ((time (car (benchmark-run (init-loader-load-file (file-name-sans-extension el))))))
-            (init-loader-log (format "loaded %s. %s" (locate-library el) time)))
-        (error
-         ;; 2011/06/12 zqwell エラー箇所表示対応
-         ;; 参考URL: http://d.hatena.ne.jp/kitokitoki/20101205/p1
-         ; (init-loader-error-log (error-message-string e))
-         (init-loader-error-log (format "%s. %s" (locate-library el) (error-message-string e)))
-         ))));)
+  ;; 2011/JUN/12 zqwell: Don't localize `load-path' and use it as global
+  (add-to-list 'load-path dir)
+  (dolist (el (init-loader--re-load-files re dir sort))
+    (condition-case e
+        (let ((time (car (benchmark-run (init-loader-load-file (file-name-sans-extension el))))))
+          (init-loader-log (format "loaded %s. %s" (locate-library el) time)))
+      (error
+       ;; 2011/JUN/12 zqwell: Improve error message
+       ;; See. http://d.hatena.ne.jp/kitokitoki/20101205/p1
+       (init-loader-error-log (format "%s. %s" (locate-library el) (error-message-string e)))))))
 
-;; 2011/06/12 zqwell elc優先読み込み対応
-;; 参考URL: http://twitter.com/#!/fkmn/statuses/21411277599
+;; 2011/JUN/12 zqwell Read first byte-compiled file if it exist.
+;; See. http://twitter.com/#!/fkmn/statuses/21411277599
 (defun init-loader--re-load-files (re dir &optional sort)
   (loop for el in (directory-files dir t)
         when (and (string-match re (file-name-nondirectory el))
