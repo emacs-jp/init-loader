@@ -197,7 +197,7 @@ Example, 00_foo.el, 01_bar.el ... 99_keybinds.el"
 
 ;;;###autoload
 (defun init-loader-show-log ()
-  "return buffer"
+  "Show init-loader log buffer"
   (interactive)
   (let ((b (get-buffer-create "*init log*")))
     (with-current-buffer b
