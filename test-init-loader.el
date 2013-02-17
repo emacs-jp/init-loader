@@ -80,7 +80,14 @@
 
     (let ((got (init-loader--re-load-files init-loader-nw-regexp "" t))
           (expected '("nw-config.el")))
-      (should (equal got expected)))))
+      (should (equal got expected)))
+
+    ;; accept '.elc' files
+    (push "nw-added.elc" init-loader-test-files)
+    (let ((got (init-loader--re-load-files init-loader-nw-regexp "" t))
+          (expected '("nw-added.elc" "nw-config.el")))
+      (should (equal got expected)))
+    (pop init-loader-test-files)))
 
 (ert-deftest init-loader-follow-symlink ()
   "Test for `init-loader-follow-symlink'"
