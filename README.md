@@ -1,16 +1,21 @@
 # init-loader.el
 
-`init-loader.el` is based on [tarao's fork version](https://gist.github.com/tarao/4362564).
+`init-loader.el` is based on .
 
 
 ## What is it ?
 
-`init-loader.el` is a loader of configuration files.
+`init-loader.el` is a loader of configuration files. `init-loader.el` loads configuration files
+from specified directory, so you only have to write configuration files and put them specified directory.
+You can separate configuration files easily by `init-loader.el`.
 
-You can seperate configuration files easily by `init-loader.el`.
+Original code is [here](http://coderepos.org/share/browser/lang/elisp/init-loader/init-loader.el).
+Original one has some problems, so this `init-loader.el` is based on [tarao's fork version](https://gist.github.com/tarao/4362564).
 
 
 ## Sample code
+
+You only have to call `init-loader-load` with directory where your configuration file are.
 
 ````elisp
 (require 'init-loader)
