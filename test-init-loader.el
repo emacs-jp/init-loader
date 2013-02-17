@@ -129,4 +129,46 @@
   (init-loader-error-log "message2")
   (should (string= "message1\nmessage2" (init-loader-error-log))))
 
+(defvar is-byte-compiled nil)
+(defvar is-loaded nil)
+(defvar is-deleted nil)
+
+(defun test-init-loader-clear-flags ()
+  (setq is-byte-compiled nil is-loaded nil is-deleted nil))
+
+(ert-deftest init-loader-load-file ()
+  "Test for `init-loader-load-file'"
+
+  (flet ((byte-compile-file (el)
+                            (setq is-byte-compiled t))
+         (load (file)
+               (setq is-loaded t))
+         (delete-file (file)
+                      (setq is-deleted t))
+         (locate-library (lib) lib))
+
+    ;; not byte compile
+    (let ((init-loader-byte-compile nil))
+      (init-loader-load-file "foo")
+      (should (and (not is-byte-compiled) is-loaded)))
+
+    (test-init-loader-clear-flags)
+
+    (let ((init-loader-byte-compile t))
+      (init-loader-load-file "foo")
+      (should (and is-byte-compiled (not is-deleted)
+                   is-loaded)))
+
+    (test-init-loader-clear-flags)
+
+    (let ((init-loader-byte-compile t))
+      ;; .elc file is older than .el file
+      (shell-command "touch foo.elc ; sleep 1")
+      (shell-command "touch foo.el")
+
+      (init-loader-load-file "foo")
+      (should (and is-byte-compiled is-deleted is-loaded))
+
+      (shell-command "rm -f foo.el foo.elc"))))
+
 ;;; test-init-loader.el end here
