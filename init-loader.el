@@ -37,11 +37,12 @@
 ;; specific configuration file.
 ;;
 ;; By default, valid names of configuration files start with two
-;; digits, for example, the following file names are all valid:
+;; digits.  For example, the following file names are all valid:
 ;;     00_util.el
 ;;     01_ik-cmd.el
 ;;     21_javascript.el
 ;;     99_global-keys.el
+;;
 ;; Files are loaded in the lexicographical order.
 ;;
 ;; A platform specific configuration file has a prefix corresponds to
@@ -59,7 +60,7 @@
 ;; ------------------------------------------------------------------------
 ;; GNU/Linux                     linux-         linux-commands.el
 ;; ------------------------------------------------------------------------
-;; All        Non-window-system  nw-            nw-key.el
+;; All        Non-window system  nw-            nw-key.el
 ;;
 ;; If `init-loader-byte-compile' is non-nil, each configuration file
 ;; is byte-compiled when it is loaded.  If you modify the .el file,
