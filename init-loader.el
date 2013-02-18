@@ -21,33 +21,55 @@
 
 ;;; Commentary:
 
+;; Place init-loader.el somewhere in your `load-path'.  Then, add the
+;; following lines to ~/.emacs or ~/.emacs.d/init.el:
 ;;
-;; Load `init-loader.el'
+;;     (require 'init-loader)
+;;     (init-loader-load "/path/to/init-directory")
 ;;
-;; (require 'init-loader)
+;; The last line loads configuration files in /path/to/init-directory.
+;; If you omit arguments for `init-loader-load', the value of
+;; `init-loader-directory' is used.
 ;;
-;; Load configuration files in `/path/to/init-directory'.
-;; If you omit arguments, `init-loader.el' loads from `init-loader-directory'
+;; Note that not all files in the directory are loaded.  Each file is
+;; examined that if it is a .el or .elc file and, it has a valid name
+;; specified by `init-loader-default-regexp' or it is a platform
+;; specific configuration file.
 ;;
-;; (init-loader-load "/path/to/init-directory")
+;; By default, valid names of configuration files start with two
+;; digits, for example, the following file names are all valid:
+;;     00_util.el
+;;     01_ik-cmd.el
+;;     21_javascript.el
+;;     99_global-keys.el
+;; Files are loaded in the lexicographical order.
 ;;
+;; A platform specific configuration file has a prefix corresponds to
+;; the platform.  The following is the list of prefixes and platform
+;; specific configuration files are loaded in the listed order after
+;; non-platform specific configuration files.
 ;;
-;; Configuration files are loaded by following rules.
-;;   1. Configuration files which start with two digits.
-;;      Small number file is loaded earlier than large number file.
-;;      e.g. "00_utils.el" "01_ik-cmd.el" "21_javascript.el" ... "99_global-keys.el"
+;; Platform   Subplatform        Prefix         Example
+;; ------------------------------------------------------------------------
+;; Windows                       windows-       windows-fonts.el
+;;            Meadow             meadow-        meadow-commands.el
+;; ------------------------------------------------------------------------
+;; Mac OS X   Carbon Emacs       carbon-emacs-  carbon-emacs-applescript.el
+;;            Cocoa Emacs        cocoa-emacs-   cocoa-emacs-plist.el
+;; ------------------------------------------------------------------------
+;; GNU/Linux                     linux-         linux-commands.el
+;; ------------------------------------------------------------------------
+;; All        Non-window-system  nw-            nw-key.el
 ;;
-;;   2. Windows specific configuration files if system is Windows.
-;;      First load files that start with 'windows-'. Second load files that start with 'meadow-'
-;;      e.g. "windows-fonts.el", "windows-system.el", "meadow-commands.el", "meadow-fonts.el"
+;; If `init-loader-byte-compile' is non-nil, each configuration file
+;; is byte-compiled when it is loaded.  If you modify the .el file,
+;; then it is recompiled next time it is loaded.
 ;;
-;;   3. MacOSX specific configuration files if system is MacOSX
-;;      First load files that start with 'carbon-'. Second load files that start with 'cocoa-'
-;;      e.g. "carbon-applescript.el", "cocoa-fonts.el", "cocoa-plist.el"
-;;
-;;   4. No window Emacs specific configuration files which start with 'nw-'
-;;      e.g. "nw-config.el", "nw-key.el"
-;;
+;; Loaded files and errors during the loading process are recorded.
+;; If `init-loader-show-log-after-init' is non-nil, the record is
+;; shown after the overall loading process.  You can do this manually
+;; by M-x init-loader-show-log.
+
 ;;; Code:
 
 (eval-when-compile (require 'cl))
