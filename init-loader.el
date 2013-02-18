@@ -106,7 +106,7 @@
   "Regular expression determining valid configuration file names.
 
 The default value matches files that start with two digits.  For
-example, 00_foo.el, 01_bar.el ... 99_keybinds.el".
+example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
   :type 'regexp
   :group 'init-loader)
 
