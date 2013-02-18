@@ -43,7 +43,8 @@
 ;;     21_javascript.el
 ;;     99_global-keys.el
 ;;
-;; Files are loaded in the lexicographical order.
+;; Files are loaded in the lexicographical order.  This helps you to
+;; resolve dependency of the configurations.
 ;;
 ;; A platform specific configuration file has a prefix corresponds to
 ;; the platform.  The following is the list of prefixes and platform
