@@ -177,10 +177,12 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
          (expand-file-name (file-symlink-p dir)))
         (t (expand-file-name dir))))
 
+(declare-function init-loader-log "init-loader.el" (&optional s) t)
 (lexical-let (logs)
   (defun init-loader-log (&optional s)
     (if s (and (stringp s) (push s logs)) (mapconcat 'identity (reverse logs) "\n"))))
 
+(declare-function init-loader-error-log "init-loader.el" (&optional s) t)
 (lexical-let (err-logs)
   (defun init-loader-error-log (&optional s)
     (if s (and (stringp s) (push s err-logs)) (mapconcat 'identity (reverse err-logs) "\n"))))
