@@ -77,7 +77,7 @@
 
 ;;; customize-variables
 (defgroup init-loader nil
-  "Loader of configuration files"
+  "Loader of configuration files."
   :prefix "init-loader-"
   :group 'initialization)
 
@@ -86,55 +86,55 @@
                                 (file-name-as-directory user-emacs-directory)
                               "~/.emacs.d/")
                             "inits"))
-  "inits directory"
+  "Default directory of configuration files."
   :type 'directory
   :group 'init-loader)
 
 (defcustom init-loader-show-log-after-init t
-  "Show loading log message if this value is non-nil"
+  "Show loading log message if this value is non-nil."
   :type 'boolean
   :group 'init-loader)
 
 (defcustom init-loader-byte-compile nil
-  "Byte-Compile configuration files if this value is non-nil"
+  "Byte-compile configuration files if this value is non-nil."
   :type 'boolean
   :group 'init-loader)
 
 (defcustom init-loader-default-regexp "\\(?:\\`[[:digit:]]\\{2\\}\\)"
-  "Regexp of common configuration files
+  "Regular expression determining valid configuration file names.
 
-Default regexp matches files that start with two digits.
-Example, 00_foo.el, 01_bar.el ... 99_keybinds.el"
+The default value matches files that start with two digits.  For
+example, 00_foo.el, 01_bar.el ... 99_keybinds.el".
   :type 'regexp
   :group 'init-loader)
 
 (defcustom init-loader-meadow-regexp "\\`meadow-"
-  "Regexp of Meadow specific configuration file"
+  "Regular expression of Meadow specific configuration file names."
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-windows-regexp "\\`windows-"
-  "Regexp of Windows specific configuration file"
+  "Regular expression of Windows specific configuration file names."
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-carbon-emacs-regexp "\\`carbon-emacs-"
-  "Regexp of Carbon Emacs specific configuration file"
+  "Regular expression of Carbon Emacs specific configuration file names."
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-cocoa-emacs-regexp "\\`cocoa-emacs-"
-  "Regexp of Cocoa Emacs specific configuration file"
+  "Regular expression of Cocoa Emacs specific configuration file names."
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-nw-regexp "\\`nw-"
-  "Regexp of no-window Emacs configuration file"
+  "Regular expression of no-window Emacs configuration file names."
   :group 'init-loader
   :type 'regexp)
 
 (defcustom init-loader-linux-regexp "\\`linux-"
-  "Regexp of GNU/Linux specific configuration file"
+  "Regular expression of GNU/Linux specific configuration file names."
   :group 'init-loader
   :type 'regexp)
 
@@ -219,7 +219,7 @@ Example, 00_foo.el, 01_bar.el ... 99_keybinds.el"
 
 ;;;###autoload
 (defun init-loader-show-log ()
-  "Show init-loader log buffer"
+  "Show init-loader log buffer."
   (interactive)
   (let ((b (get-buffer-create "*init log*")))
     (with-current-buffer b
