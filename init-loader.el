@@ -140,6 +140,7 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el".
 
 ;;;###autoload
 (defun* init-loader-load (&optional (init-dir init-loader-directory))
+  "Load configuration files in INIT-DIR."
   (let ((init-dir (init-loader-follow-symlink init-dir)))
     (assert (and (stringp init-dir) (file-directory-p init-dir)))
     (init-loader-re-load init-loader-default-regexp init-dir t)
