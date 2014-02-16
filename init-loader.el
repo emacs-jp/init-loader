@@ -228,6 +228,7 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
   (interactive)
   (let ((b (get-buffer-create "*init log*")))
     (with-current-buffer b
+      (view-mode -1)
       (erase-buffer)
       (insert "------- error log -------\n\n"
               (init-loader-error-log)
@@ -239,7 +240,8 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
       (insert "------- load path -------\n\n"
               (mapconcat 'identity load-path "\n"))
       (goto-char (point-min)))
-    (switch-to-buffer b)))
+    (switch-to-buffer b)
+    (view-mode +1)))
 
 (provide 'init-loader)
 
