@@ -143,7 +143,8 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
 ;;;###autoload
 (defun* init-loader-load (&optional (init-dir init-loader-directory))
   "Load configuration files in INIT-DIR."
-  (let ((init-dir (init-loader-follow-symlink init-dir)))
+  (let ((init-dir (init-loader-follow-symlink init-dir))
+        (is-carbon-emacs nil))
     (assert (and (stringp init-dir) (file-directory-p init-dir)))
     (init-loader-re-load init-loader-default-regexp init-dir t)
 
@@ -156,9 +157,13 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
 
     ;; Carbon Emacs
     (when (featurep 'carbon-emacs-package)
-      (init-loader-re-load init-loader-carbon-emacs-regexp init-dir))
+      (init-loader-re-load init-loader-carbon-emacs-regexp init-dir)
+      (setq is-carbon-emacs t))
     ;; Cocoa Emacs
-    (when (equal window-system 'ns)
+    (when (or (equal window-system 'ns)
+              (and (not is-carbon-emacs) ;; for daemon mode
+                   (not window-system)
+                   (eq system-type 'darwin)))
       (init-loader-re-load init-loader-cocoa-emacs-regexp init-dir))
 
     ;; GNU Linux
