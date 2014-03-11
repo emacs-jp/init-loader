@@ -20,7 +20,7 @@ the original one.
 You only have to call `init-loader-load` with a directory where your
 configuration files are located.
 
-````elisp
+```lisp
 (require 'init-loader)
 
 ;; Load configuration files in '/path/to/init-directory'.
@@ -28,7 +28,7 @@ configuration files are located.
 
 ;; If you omit arguments, then `init-loader-directory' is used
 (init-loader-load)
-````
+```
 
 ## Features
 
