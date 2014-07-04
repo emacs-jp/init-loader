@@ -68,9 +68,11 @@
 ;; then it is recompiled next time it is loaded.
 ;;
 ;; Loaded files and errors during the loading process are recorded.
-;; If `init-loader-show-log-after-init' is non-nil, the record is
-;; shown after the overall loading process.  You can do this manually
-;; by M-x init-loader-show-log.
+;; If `init-loader-show-log-after-init' is `t', the record is
+;; shown after the overall loading process. If `init-loader-show-log-after-init`
+;; is `'error-only', the record is shown only error occured.
+;; You can do this manually by M-x init-loader-show-log.
+;;
 
 ;;; Code:
 

@@ -96,7 +96,9 @@ Default directory of configuration files.
 
 #### `init-loader-show-log-after-init` : `boolean` (default: `t`)
 
-Show log message after initializing if this value is non-nil.
+Show log message after initializing if this value is `t`.
+If this value is `error-only`, log buffer is shown only
+errors occured.
 
 #### `init-loader-byte-compile` : `boolean` (default: `nil`)
 
