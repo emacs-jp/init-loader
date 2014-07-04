@@ -68,9 +68,11 @@
 ;; then it is recompiled next time it is loaded.
 ;;
 ;; Loaded files and errors during the loading process are recorded.
-;; If `init-loader-show-log-after-init' is non-nil, the record is
-;; shown after the overall loading process.  You can do this manually
-;; by M-x init-loader-show-log.
+;; If `init-loader-show-log-after-init' is `t', the record is
+;; shown after the overall loading process. If `init-loader-show-log-after-init`
+;; is `'error-only', the record is shown only error occured.
+;; You can do this manually by M-x init-loader-show-log.
+;;
 
 ;;; Code:
 
@@ -93,7 +95,8 @@
   :group 'init-loader)
 
 (defcustom init-loader-show-log-after-init t
-  "Show loading log message if this value is non-nil."
+  "Show loading log message if this value is t. If this value is `error-only',
+log message is shown only errors occured."
   :type 'boolean
   :group 'init-loader)
 
@@ -174,8 +177,9 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
     (when (null window-system)
       (init-loader-re-load init-loader-nw-regexp init-dir))
 
-    (when init-loader-show-log-after-init
-      (add-hook  'after-init-hook 'init-loader-show-log))))
+    (case init-loader-show-log-after-init
+      (error-only (add-hook 'after-init-hook 'init-loader--show-log-error-only))
+      (t (add-hook 'after-init-hook 'init-loader-show-log)))))
 
 (defun init-loader-follow-symlink (dir)
   (cond ((file-symlink-p dir)
@@ -226,6 +230,11 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
                            (not (locate-library (concat el "c"))))))
         collect (file-name-nondirectory el) into ret
         finally return (if sort (sort ret 'string<) ret)))
+
+(defun init-loader--show-log-error-only ()
+  (let ((err (init-loader-error-log)))
+    (when (and err (not (string= err "")))
+      (init-loader-show-log))))
 
 ;;;###autoload
 (defun init-loader-show-log ()
