@@ -95,7 +95,8 @@
   :group 'init-loader)
 
 (defcustom init-loader-show-log-after-init t
-  "Show loading log message if this value is non-nil."
+  "Show loading log message if this value is t. If this value is `error-only',
+log message is shown only errors occured."
   :type 'boolean
   :group 'init-loader)
 
