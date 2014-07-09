@@ -174,7 +174,7 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
       (init-loader-re-load init-loader-linux-regexp init-dir))
 
     ;; no-window
-    (when (null window-system)
+    (when (not window-system)
       (init-loader-re-load init-loader-nw-regexp init-dir))
 
     (case init-loader-show-log-after-init
