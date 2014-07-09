@@ -1,4 +1,6 @@
 .PHONY : test
 
+EMACS ?= emacs
+
 test:
-	emacs -Q -batch -L . -l test-init-loader.el -f ert-run-tests-batch-and-exit
+	$(EMACS) -Q -batch -L . -l test-init-loader.el -f ert-run-tests-batch-and-exit
