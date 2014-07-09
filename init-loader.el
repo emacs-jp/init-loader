@@ -163,14 +163,14 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
       (init-loader-re-load init-loader-carbon-emacs-regexp init-dir)
       (setq is-carbon-emacs t))
     ;; Cocoa Emacs
-    (when (or (equal window-system 'ns)
+    (when (or (eq window-system 'ns)
               (and (not is-carbon-emacs) ;; for daemon mode
                    (not window-system)
                    (eq system-type 'darwin)))
       (init-loader-re-load init-loader-cocoa-emacs-regexp init-dir))
 
     ;; GNU Linux
-    (when (equal system-type 'gnu/linux)
+    (when (eq system-type 'gnu/linux)
       (init-loader-re-load init-loader-linux-regexp init-dir))
 
     ;; no-window
