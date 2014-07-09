@@ -186,15 +186,19 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
          (expand-file-name (file-symlink-p dir)))
         (t (expand-file-name dir))))
 
-(declare-function init-loader-log "init-loader.el" (&optional s) t)
-(lexical-let (logs)
-  (defun init-loader-log (&optional s)
-    (if s (and (stringp s) (push s logs)) (mapconcat 'identity (reverse logs) "\n"))))
+(defvar init-loader--log-buffer nil)
+(defun init-loader-log (&optional msg)
+  (if msg
+      (when (stringp msg)
+        (push msg init-loader--log-buffer))
+    (mapconcat 'identity (reverse init-loader--log-buffer) "\n")))
 
-(declare-function init-loader-error-log "init-loader.el" (&optional s) t)
-(lexical-let (err-logs)
-  (defun init-loader-error-log (&optional s)
-    (if s (and (stringp s) (push s err-logs)) (mapconcat 'identity (reverse err-logs) "\n"))))
+(defvar init-loader--error-log-buffer nil)
+(defun init-loader-error-log (&optional msg)
+  (if msg
+      (when (stringp msg)
+        (push msg init-loader--error-log-buffer))
+    (mapconcat 'identity (reverse init-loader--error-log-buffer) "\n")))
 
 (defvar init-loader-before-compile-hook nil)
 (defun init-loader-load-file (file)
