@@ -1,5 +1,8 @@
 Revision history for init-loader.el
 
+Revision 0.02 2014/10/31 syohex
+  - Support MacPorts Emacs
+
 Revision 0.01 2014/08/29 syohex
   - Initial version for melpa-stable
   - Fix init-loader-show-log issue(Thanks k2nr)
