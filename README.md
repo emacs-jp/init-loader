@@ -113,7 +113,7 @@ Abnormal hook run before byte-compiling a configuration file when
 takes one argument, which is the name of the configuration file to be
 loaded.
 
-[travis-badge]: https://travis-ci.org/emacs-jp/init-loader.png
+[travis-badge]: https://travis-ci.org/emacs-jp/init-loader.svg
 [travis-link]: https://travis-ci.org/emacs-jp/init-loader
 [melpa-link]: http://melpa.org/#/init-loader
 [melpa-stable-link]: http://melpa.org/#/init-loader
