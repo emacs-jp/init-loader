@@ -116,6 +116,6 @@ loaded.
 [travis-badge]: https://travis-ci.org/emacs-jp/init-loader.svg
 [travis-link]: https://travis-ci.org/emacs-jp/init-loader
 [melpa-link]: http://melpa.org/#/init-loader
-[melpa-stable-link]: http://melpa.org/#/init-loader
+[melpa-stable-link]: http://stable.melpa.org/#/init-loader
 [melpa-badge]: http://melpa.org/packages/init-loader-badge.svg
 [melpa-stable-badge]: http://stable.melpa.org/packages/init-loader-badge.svg
