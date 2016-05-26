@@ -205,6 +205,8 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
   (when init-loader-byte-compile
     (let* ((path (file-name-sans-extension (locate-library file)))
            (el (concat path ".el")) (elc (concat path ".elc")))
+      (when (and (not (file-exists-p el)) (file-exists-p elc))
+        (error "There is only byte-compiled file."))
       (when (or (not (file-exists-p elc))
                 (file-newer-than-file-p el elc))
         (when (file-exists-p elc) (delete-file elc))
