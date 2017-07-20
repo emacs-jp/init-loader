@@ -54,14 +54,14 @@ the platform.  The following is the list of prefixes and platform
 specific configuration files are loaded in the listed order after
 non-platform specific configuration files.
 
-Platform |  Subplatform       | Prefix         |  Example
----------|--------------------|----------------|-----------------------------
-Windows  |                    | `windows-`     |  windows-fonts.el
-         |  Meadow            | `meadow-`      |  meadow-commands.el
-Mac OS X |  Carbon Emacs      | `carbon-emacs-`|  carbon-emacs-applescript.el
-         |  Cocoa Emacs       | `cocoa-emacs-` |  cocoa-emacs-plist.el
-GNU/Linux|                    | `linux-`       |  linux-commands.el
-All      |  Non-window system | `nw-`          |  nw-key.el
+| Platform  | Subplatform       | Prefix          | Example                     |
+| --------- | ----------------- | --------------- | --------------------------- |
+| Windows   |                   | `windows-`      | windows-fonts.el            |
+|           | Meadow            | `meadow-`       | meadow-commands.el          |
+| Mac OS X  | Carbon Emacs      | `carbon-emacs-` | carbon-emacs-applescript.el |
+|           | Cocoa Emacs       | `cocoa-emacs-`  | cocoa-emacs-plist.el        |
+| GNU/Linux |                   | `linux-`        | linux-commands.el           |
+| All       | Non-window system | `nw-`           | nw-key.el                   |
 
 ### Byte-compilation
 
