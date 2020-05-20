@@ -61,6 +61,8 @@
 ;; ------------------------------------------------------------------------
 ;; GNU/Linux                     linux-         linux-commands.el
 ;; ------------------------------------------------------------------------
+;; *BSD                          bsd-           bsd-commands.el
+;; ------------------------------------------------------------------------
 ;; All        Non-window system  nw-            nw-key.el
 ;;
 ;; If `init-loader-byte-compile' is non-nil, each configuration file
@@ -133,6 +135,10 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
   "Regular expression of GNU/Linux specific configuration file names."
   :type 'regexp)
 
+(defcustom init-loader-bsd-regexp "\\`bsd-"
+  "Regular expression of *BSD specific configuration file names."
+  :type 'regexp)
+
 ;;;###autoload
 (defun* init-loader-load (&optional (init-dir init-loader-directory))
   "Load configuration files in INIT-DIR."
@@ -162,6 +168,10 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
     ;; GNU Linux
     (when (eq system-type 'gnu/linux)
       (init-loader-re-load init-loader-linux-regexp init-dir))
+
+    ;; *BSD
+    (when (eq system-type 'berkeley-unix)
+      (init-loader-re-load init-loader-bsd-regexp init-dir))
 
     ;; no-window
     (when (not window-system)

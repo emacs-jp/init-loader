@@ -47,7 +47,9 @@
     "meadow-shell.el"
     "meadow-w32-symlinks.el"
     "linux-fonts.el"
-    "linux-commands.el"))
+    "linux-commands.el"
+    "bsd-config.el"
+    "bsd-migemo.el"))
 
 ;; TODO flet is obsoleted from Emacs 24.3
 
@@ -76,6 +78,10 @@
 
     (let ((got (init-loader--re-load-files init-loader-linux-regexp "" t))
           (expected '("linux-commands.el" "linux-fonts.el")))
+      (should (equal got expected)))
+
+    (let ((got (init-loader--re-load-files init-loader-bsd-regexp "" t))
+          (expected '("bsd-config.el" "bsd-migemo.el")))
       (should (equal got expected)))
 
     (let ((got (init-loader--re-load-files init-loader-nw-regexp "" t))
