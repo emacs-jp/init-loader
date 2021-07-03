@@ -19,9 +19,7 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'cl))
-
+(require 'cl-lib)
 (require 'ert)
 (require 'init-loader)
 
@@ -51,12 +49,11 @@
     "bsd-config.el"
     "bsd-migemo.el"))
 
-;; TODO flet is obsoleted from Emacs 24.3
-
 (ert-deftest init-loader--re-load-files ()
   "Test for `init-loader--re-load-files'"
-  (flet ((directory-files (dir &optional full match nosort)
-                          init-loader-test-files))
+  (cl-letf (((symbol-function #'directory-files)
+             (lambda (dir &optional full match nosort)
+               init-loader-test-files)))
     (let ((got (init-loader--re-load-files init-loader-default-regexp "" t))
           (expected '("00_utils.el" "01_ik-cmd.el" "20_elisp.el"
                       "21_javascript.el" "23_yaml.el" "25_perl.el"
@@ -97,9 +94,9 @@
 
 (ert-deftest init-loader-follow-symlink ()
   "Test for `init-loader-follow-symlink'"
-  (flet ((directory-files (dir &optional full match nosort)
-                          init-loader-test-files))
-
+  (cl-letf (((symbol-function #'directory-files)
+             (lambda (dir &optional full match nosort)
+               init-loader-test-files)))
     (let ((symlink "symlink.el")
           (thisfile "test-init-loader.el"))
       ;; setup
@@ -152,14 +149,18 @@
 (ert-deftest init-loader-load-file ()
   "Test for `init-loader-load-file'"
 
-  (flet ((byte-compile-file (el)
-                            (setq is-byte-compiled t))
-         (load (file)
-               (setq is-loaded t))
-         (delete-file (file)
-                      (setq is-deleted t))
-         (locate-library (lib) lib))
-
+  (cl-letf (((symbol-function #'byte-compile-file)
+             (lambda (el)
+               (setq is-byte-compiled t)))
+            ((symbol-function #'load)
+             (lambda (file &optional noerror nomessage nosuffix must-suffix)
+               (setq is-loaded t)))
+            ((symbol-function #'delete-file)
+             (lambda (file &optional trash)
+               (setq is-deleted t)))
+            ((symbol-function #'locate-library)
+             (lambda (lib &optional nosuffix path interactive-call)
+               lib)))
     ;; not byte compile
     (let ((init-loader-byte-compile nil))
       (init-loader-load-file "foo")
