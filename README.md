@@ -1,4 +1,4 @@
-# init-loader.el [![travis badge][travis-badge]][travis-link] [![melpa badge][melpa-badge]][melpa-link] [![melpa stable badge][melpa-stable-badge]][melpa-stable-link]
+# init-loader.el [![Github Actions Status][github-actions-badge]][github-actions-link] [![melpa badge][melpa-badge]][melpa-link] [![melpa stable badge][melpa-stable-badge]][melpa-stable-link]
 
 
 ## What is it ?
@@ -114,9 +114,9 @@ Abnormal hook run before byte-compiling a configuration file when
 takes one argument, which is the name of the configuration file to be
 loaded.
 
-[travis-badge]: https://travis-ci.org/emacs-jp/init-loader.svg
-[travis-link]: https://travis-ci.org/emacs-jp/init-loader
-[melpa-link]: http://melpa.org/#/init-loader
-[melpa-stable-link]: http://stable.melpa.org/#/init-loader
-[melpa-badge]: http://melpa.org/packages/init-loader-badge.svg
-[melpa-stable-badge]: http://stable.melpa.org/packages/init-loader-badge.svg
+[github-actions-link]: https://github.com/emacs-jp/init-loader/actions
+[github-actions-badge]: https://github.com/emacs-jp/init-loader/workflows/CI/badge.svg
+[melpa-link]: https://melpa.org/#/init-loader
+[melpa-stable-link]: https://stable.melpa.org/#/init-loader
+[melpa-badge]: https://melpa.org/packages/init-loader-badge.svg
+[melpa-stable-badge]: https://stable.melpa.org/packages/init-loader-badge.svg
