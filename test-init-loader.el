@@ -113,6 +113,33 @@
       ;; teardown
       (delete-file symlink))))
 
+(ert-deftest init-loader-load ()
+  "Test `init-loader-load'"
+  ;; Test `init-loader-show-log-after-init' switch.
+  (cl-letf (((symbol-function #'directory-files)
+             (lambda (dir &optional full match nosort)
+               init-loader-test-files)))
+    (let ((init-loader-show-log-after-init t)
+          (after-init-hook nil))
+      (init-loader-load "")
+      (should
+       (and (member 'init-loader-show-log after-init-hook)
+            (not (member 'init-loader--show-log-error-only after-init-hook)))))
+
+    (let ((init-loader-show-log-after-init 'error-only)
+          (after-init-hook nil))
+      (init-loader-load "")
+      (should
+       (and (not (member 'init-loader-show-log after-init-hook))
+            (member 'init-loader--show-log-error-only after-init-hook))))
+
+    (let ((init-loader-show-log-after-init nil)
+          (after-init-hook nil))
+      (init-loader-load "")
+      (should
+       (and (not (member 'init-loader-show-log after-init-hook))
+            (not (member 'init-loader--show-log-error-only after-init-hook)))))))
+
 (ert-deftest init-loader-log ()
   "Test for `init-loader-log'"
   ;; pass not string value

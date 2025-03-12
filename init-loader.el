@@ -180,7 +180,7 @@ example, 00_foo.el, 01_bar.el ... 99_keybinds.el."
 
     (cl-case init-loader-show-log-after-init
       (error-only (add-hook 'after-init-hook 'init-loader--show-log-error-only))
-      (t (add-hook 'after-init-hook 'init-loader-show-log)))))
+      ('t (add-hook 'after-init-hook 'init-loader-show-log)))))
 
 (defun init-loader-follow-symlink (dir)
   (cond ((file-symlink-p dir)
